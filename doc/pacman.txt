@@ -1,0 +1,147 @@
+*pacman.txt*    Pacman Animations Plugin for Neovim
+
+Pacman Animations for Neovim
+============================
+
+Author: Marat Arzymatov / maarutan
+Version: 1.0
+Repository: https://github.com/maarutan/pacman-anims-nvim
+
+This plugin adds a Pacman animation to Neovim, resembling the iconic `ILoveCandy`
+feature in Arch Linux. The animation can be used anywhere there is space for a
+line of text, such as in your tabline, statusline, or custom UI components.
+
+Pacman animation example:
+   ---C  o  o  o  o 
+   -----Co  o  o  o
+   ------c  o  o  o
+
+------------------------------------------------------------------------------
+CONTENTS                                                        *pacman-contents*
+
+1. Introduction.................................|pacman-introduction|
+2. Features.....................................|pacman-features|
+3. Installation.................................|pacman-installation|
+4. Configuration................................|pacman-configuration|
+5. Usage Examples...............................|pacman-usage|
+6. FAQ..........................................|pacman-faq|
+
+------------------------------------------------------------------------------
+1. Introduction                                                  *pacman-introduction*
+
+Pacman Animations Plugin brings a fun and dynamic visual element to Neovim. The
+animation can replace empty space in your UI, making it more engaging and
+playful. It is fully customizable, allowing you to adjust its speed, width, and
+appearance.
+
+------------------------------------------------------------------------------
+2. Features                                                      *pacman-features*
+
+- **Versatile Placement**: Add the animation anywhere a string of text can be
+  displayed, such as in tablines, statuslines, or custom layouts.
+- **Highly Customizable**: Adjust width, speed, and even the characters used
+  for Pacman and the path.
+- **Lightweight**: Written in Lua for fast and efficient performance.
+
+------------------------------------------------------------------------------
+3. Installation                                                  *pacman-installation*
+
+Install using your favorite plugin manager.
+
+### Using `lazy.nvim`
+>lua
+{
+    "maarutan/pacman-anims-nvim",
+    config = function()
+        require("pacman").setup({
+            width = 40,
+            delay = 500,
+        })
+    end
+}
+
+### Using `packer.nvim`
+>lua
+use {
+    "maarutan/pacman-anims-nvim",
+    config = function()
+        require("pacman").setup({
+            width = 40,
+            delay = 500,
+        })
+    end
+}
+
+------------------------------------------------------------------------------
+4. Configuration                                                 *pacman-configuration*
+
+You can configure the plugin via the `setup()` function. Available options:
+
+| Option   | Default | Description                                |
+|----------|---------|--------------------------------------------|
+| `width`  | `30`    | Width of the Pacman path                  |
+| `delay`  | `600`   | Speed of the animation in milliseconds    |
+
+### Example Configuration
+>lua
+require("pacman").setup({
+    width = 50,  -- Wider path
+    delay = 400, -- Faster animation
+})
+
+------------------------------------------------------------------------------
+5. Usage Examples                                               *pacman-usage*
+
+### Add to Bufferline
+Use the Pacman animation as a custom tabline offset:
+>lua
+require("bufferline").setup({
+    offsets = {
+        {
+            filetype = "neo-tree",
+            text = function()
+                return require("pacman").get_pacman_text()
+            end,
+            text_align = "center",
+            separator = true,
+        },
+    },
+})
+
+### Add to Lualine
+Integrate the Pacman animation into your statusline:
+>lua
+require("lualine").setup({
+    lualine_c = {
+        function()
+            return require("pacman").get_pacman_text()
+        end,
+        "fileformat",
+        "filetype",
+    },
+})
+
+### Add to a Custom Widget
+Simply call the `get_pacman_text()` function wherever you want to use it:
+>lua
+local pacman_text = require("pacman").get_pacman_text()
+print(pacman_text)  -- Output Pacman animation string
+
+------------------------------------------------------------------------------
+6. FAQ                                                           *pacman-faq*
+
+### What fonts are required?
+The plugin requires **Nerd Fonts** or any font that supports special symbols.
+
+### Can I change the characters used in the animation?
+Yes, you can edit the source code to customize Pacman (`C` and `c`) and the
+path (`o`, `─`, etc.).
+
+### Why isn't the animation updating?
+Ensure your Neovim tabline is enabled:
+>lua
+vim.o.showtabline = 2
+
+------------------------------------------------------------------------------
+
+vim:tw=78:ts=8:ft=help:norl:
