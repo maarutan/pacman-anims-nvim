@@ -108,21 +108,30 @@ require("lualine").setup({
 
 ## Configuration
 
-The plugin provides a `setup()` function to configure the width and speed of the animation.
+The plugin provides a `setup()` function to configure various aspects of the Pacman animation, including width, speed, and custom symbols for Pacman and the path.
 
-| Option  | Default Value | Description                       |
-| ------- | ------------- | --------------------------------- |
-| `width` | `30`          | Width of the Pacman path          |
-| `delay` | `600`         | Animation speed (in milliseconds) |
+| Option          | Default Value | Description                                   |
+| --------------- | ------------- | --------------------------------------------- |
+| `width`         | `30`          | Width of the Pacman path                      |
+| `delay`         | `600`         | Animation speed (in milliseconds)             |
+| `pacman_open`   | `"C"`         | Symbol for Pacman when the mouth is open      |
+| `pacman_closed` | `"c"`         | Symbol for Pacman when the mouth is closed    |
+| `path_food`     | `""`         | Symbol representing food for Pacman           |
+| `path_empty`    | `" "`         | Symbol representing an empty part of the path |
+| `path_trail`    | `"─"`         | Symbol representing the trail left by Pacman  |
 
 ### Example Configuration
 
-```lua
+````lua
 require("pacman").setup({
-    width = 50,  -- Wider path for more fun
-    delay = 400, -- Faster animation
+    width = 50,          -- Wider path for more fun
+    delay = 400,         -- Faster animation
+    pacman_open = "ᗧ",   -- Custom Pacman symbol (open mouth)
+    pacman_closed = "ᗤ", -- Custom Pacman symbol (closed mouth)
+    path_food = "🍒",    -- Custom food symbol
+    path_empty = " ",    -- Keep the path empty as a space
+    path_trail = "-",    -- Custom trail symbol
 })
-```
 
 ---
 
@@ -138,7 +147,7 @@ Add the following line to your configuration:
 
 ```lua
 vim.o.showtabline = 2
-```
+````
 
 ---
 
