@@ -1,33 +1,32 @@
 local M = {}
 
 local config = {
-	width = 30, -- Ширина дорожки
-	delay = 600, -- Задержка между кадрами (в миллисекундах)
-	pacman_open = "C", -- Символ открытого пакмана
-	pacman_closed = "c", -- Символ закрытого пакмана
-	path_food = "", -- Символ еды
-	path_trail = "─", -- След пакмана
+	width = 30,
+	delay = 600,
+	pacman_open = "C",
+	pacman_closed = "c",
+	path_food = "",
+	path_empty = " ",
+	path_trail = "─",
 }
 
 local path = {}
 local position = 1
 local is_open = true
 
--- Генерация начального пути
 local function generate_path()
 	path = {}
 	for i = 1, config.width do
 		if (i % 4) == 0 then
 			table.insert(path, config.path_food)
 		else
-			table.insert(path, " ")
+			table.insert(path, config.path_empty)
 		end
 	end
 end
 
 generate_path()
 
--- Получение текущего кадра Pacman
 function M.get_pacman_text()
 	local pacman = is_open and config.pacman_open or config.pacman_closed
 	local line = {}
@@ -39,10 +38,9 @@ function M.get_pacman_text()
 		end
 	end
 
-	-- Обновление следа пакмана
 	if path[position] == config.path_food then
 		path[position] = config.path_trail
-	elseif path[position] == " " then
+	elseif path[position] == config.path_empty then
 		path[position] = config.path_trail
 	end
 
@@ -57,23 +55,22 @@ function M.get_pacman_text()
 	return table.concat(line)
 end
 
--- Настройка плагина
-function M.setup(user_config)
-	if user_config then
-		config = vim.tbl_extend("force", config, user_config)
-	end
-
-	-- Таймер для бесконечного обновления
+function M.start()
 	local timer = vim.loop.new_timer()
 	timer:start(
 		0,
 		config.delay,
 		vim.schedule_wrap(function()
-			-- Обновление tabline
-			vim.o.tabline = M.get_pacman_text()
-			vim.cmd("redrawtabline")
+			vim.cmd("redrawtabline") -- Обновление глобальных строк
+			vim.cmd("redrawstatus") -- Обновление статуслайна
 		end)
 	)
+end
+
+function M.setup(user_config)
+	if user_config then
+		config = vim.tbl_extend("force", config, user_config)
+	end
 end
 
 return M
