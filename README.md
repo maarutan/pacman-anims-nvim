@@ -147,6 +147,7 @@ Add the following line to your configuration:
 
 ```lua
 vim.o.showtabline = 2
+```
 ````
 
 ---
