@@ -53,11 +53,15 @@ Install using your favorite plugin manager.
 {
     "maarutan/pacman-anims-nvim",
     config = function()
-        require("pacman").setup({
-            width = 40,
-            delay = 500,
-        })
-    end
+      require("pacman").setup({
+          width = 40,
+          delay = 300,
+          pacman_open = "C",
+          pacman_closed = "c",
+          path_food = "",
+          path_empty = " ",
+          path_trail = "─",
+  })    end
 }
 
 ### Using `packer.nvim`
