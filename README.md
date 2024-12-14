@@ -122,7 +122,7 @@ The plugin provides a `setup()` function to configure various aspects of the Pac
 
 ### Example Configuration
 
-````lua
+```lua
 require("pacman").setup({
     width = 50,          -- Wider path for more fun
     delay = 400,         -- Faster animation
@@ -132,6 +132,8 @@ require("pacman").setup({
     path_empty = " ",    -- Keep the path empty as a space
     path_trail = "-",    -- Custom trail symbol
 })
+
+```
 
 ---
 
@@ -148,7 +150,6 @@ Add the following line to your configuration:
 ```lua
 vim.o.showtabline = 2
 ```
-````
 
 ---
 
